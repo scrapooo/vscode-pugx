@@ -1,0 +1,72 @@
+{
+  "name": "vscode-pugx",
+  "displayName": "vscode-pugx",
+  "description": "pug extension",
+  "version": "0.0.1",
+  "repository": "https://gitee.com/cchunter/vscode-pugx.git",
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "icon": "assets/icon.png",
+  "publisher": "scrapooo",
+  "author": "scrapooo <cwcchunter@gmail.com>",
+  "license": "MIT",
+  "activationEvents": [
+    "onLanguage:pugx"
+  ],
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./client/out/extension",
+  "scripts": {
+    "vscode:prepublish": "cd client && npm install && cd .. && npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "build": "vsce package",
+    "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd .."
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "pugx",
+        "icon": {
+          "dark": "assets/icon.png",
+          "light": "assets/icon.png"
+        },
+        "extensions": [
+          ".pugx"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "pugx",
+        "scopeName": "source.pugx",
+        "path": "./syntaxes/pugx.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.css": "css",
+          "source.css.less": "less",
+          "source.js": "javascript"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "pugx",
+        "path": "./snippets.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/eslint": "8.4.2",
+    "@types/mocha": "5.2.7",
+    "@types/node": "12.12.0",
+    "@typescript-eslint/eslint-plugin": "4.16.0",
+    "@typescript-eslint/parser": "4.16.0",
+    "eslint": "7.32.0",
+    "typescript": "4.5.5",
+    "vsce": "2.8.0"
+  }
+}

@@ -1,0 +1,1009 @@
+{
+  "information_for_contributors": [
+    "This file has been converted from https://github.com/davidrios/pug-tmbundle/blob/master/Syntaxes/Pug.JSON-tmLanguage",
+    "If you want to provide a fix or improvement, please create a pull request against the original repository.",
+    "Once accepted there, we are happy to receive an update request."
+  ],
+  "version": "https://github.com/davidrios/pug-tmbundle/commit/e67e895f6fb64932aa122e471000fa55d826bff6",
+  "name": "Pug",
+  "scopeName": "source.pugx",
+  "patterns": [
+    {
+      "match": "^(!!!|doctype)(\\s*[a-zA-Z0-9-_]+)?",
+      "name": "meta.tag.sgml.doctype.html",
+      "comment": "Doctype declaration."
+    },
+    {
+      "begin": "^(\\s*)//-",
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "comment.unbuffered.block.pug",
+      "comment": "Unbuffered (pug-only) comments."
+    },
+    {
+      "begin": "^(\\s*)//",
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "string.comment.buffered.block.pug",
+      "comment": "Buffered (html) comments.",
+      "patterns": [
+        {
+          "captures": {
+            "1": {
+              "name": "invalid.illegal.comment.comment.block.pugx"
+            }
+          },
+          "match": "^\\s*(//)(?!-)",
+          "name": "string.comment.buffered.block.pug",
+          "comment": "Buffered comments inside buffered comments will generate invalid html."
+        }
+      ]
+    },
+    {
+      "begin": "<!--",
+      "end": "--\\s*>",
+      "name": "comment.unbuffered.block.pug",
+      "patterns": [
+        {
+          "match": "--",
+          "name": "invalid.illegal.comment.comment.block.pugx"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)-$",
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "source.js",
+      "comment": "Unbuffered code block.",
+      "patterns": [
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)(script)((\\.$)|(?=[^\\n]*(text|application)/javascript.*\\.$))",
+      "beginCaptures": {
+        "2": {
+          "name": "entity.name.tag.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "meta.tag.other",
+      "comment": "Script tag with JavaScript code.",
+      "patterns": [
+        {
+          "begin": "\\G(?=\\()",
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#tag_attributes"
+            }
+          ]
+        },
+        {
+          "begin": "\\G(?=[.#])",
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#complete_tag"
+            }
+          ]
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)(style)\\((lang)=\"(less)\"\\)\\.",
+      "beginCaptures": {
+        "2": {
+          "name": "entity.name.tag.pugx"
+        },
+        "3": {
+          "name": "entity.other.attribute-name.tag.pugx"
+        },
+        "4": {
+          "name": "string.quoted.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "source.css.less.pug",
+      "patterns": [
+        {
+          "include": "source.css.less"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)(style)((\\.$)|(?=[.#(].*\\.$))",
+      "beginCaptures": {
+        "2": {
+          "name": "entity.name.tag.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "meta.tag.other",
+      "comment": "Style tag with CSS code.",
+      "patterns": [
+        {
+          "begin": "\\G(?=\\()",
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#tag_attributes"
+            }
+          ]
+        },
+        {
+          "begin": "\\G(?=[.#])",
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#complete_tag"
+            }
+          ]
+        },
+        {
+          "include": "source.css"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*):(sass)(?=\\(|$)",
+      "beginCaptures": {
+        "2": {
+          "name": "constant.language.name.sass.filter.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "source.sass.filter.pug",
+      "patterns": [
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "source.sass"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*):(less)(?=\\(|$)",
+      "beginCaptures": {
+        "2": {
+          "name": "constant.language.name.less.filter.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "source.less.filter.pug",
+      "patterns": [
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "source.less"
+        }
+      ]
+    },
+
+    {
+      "begin": "^(\\s*):(stylus)(?=\\(|$)",
+      "beginCaptures": {
+        "2": {
+          "name": "constant.language.name.stylus.filter.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "patterns": [
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "source.stylus"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*):(coffee(-?script)?)(?=\\(|$)",
+      "beginCaptures": {
+        "2": {
+          "name": "constant.language.name.coffeescript.filter.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "name": "source.coffeescript.filter.pug",
+      "patterns": [
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "source.coffee"
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)((:(?=.))|(:$))",
+      "beginCaptures": {
+        "4": {
+          "name": "invalid.illegal.empty.generic.filter.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "comment": "Generic Pug filter.",
+      "patterns": [
+        {
+          "begin": "\\G(?<=:)(?=.)",
+          "end": "$",
+          "name": "name.generic.filter.pug",
+          "patterns": [
+            {
+              "match": "\\G\\(",
+              "name": "invalid.illegal.name.generic.filter.pugx"
+            },
+            {
+              "match": "[\\w-]",
+              "name": "constant.language.name.generic.filter.pugx"
+            },
+            {
+              "include": "#tag_attributes"
+            },
+            {
+              "match": "\\W",
+              "name": "invalid.illegal.name.generic.filter.pugx"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "begin": "^(\\s*)(?=[\\w.#].*?\\.$)(?=(?:(?:(?:(?:(?:#[\\w-]+)|(?:\\.[\\w-]+))|(?:(?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))(?:(?:#[\\w-]+)|(?:\\.[\\w-]+)|(?:\\((?:[^()\\'\\\"]*(?:(?:\\'(?:[^\\']|(?:(?<!\\\\)\\\\\\'))*\\')|(?:\\\"(?:[^\\\"]|(?:(?<!\\\\)\\\\\\\"))*\\\")))*[^()]*\\))*)*)(?:(?:(?::\\s+)|(?<=\\)))(?:(?:(?:(?:#[\\w-]+)|(?:\\.[\\w-]+))|(?:(?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))(?:(?:#[\\w-]+)|(?:\\.[\\w-]+)|(?:\\((?:[^()\\'\\\"]*(?:(?:\\'(?:[^\\']|(?:(?<!\\\\)\\\\\\'))*\\')|(?:\\\"(?:[^\\\"]|(?:(?<!\\\\)\\\\\\\"))*\\\")))*[^()]*\\))*)*))*)\\.$)(?:(?:(#[\\w-]+)|(\\.[\\w-]+))|((?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))",
+      "beginCaptures": {
+        "2": {
+          "name": "entity.other.attribute-name.id.pugx"
+        },
+        "3": {
+          "name": "entity.other.attribute-name.class.pugx"
+        },
+        "4": {
+          "name": "meta.tag.other entity.name.tag.pugx"
+        }
+      },
+      "end": "^(?!(\\1\\s)|\\s*$)",
+      "comment": "Generated from dot_block_tag.py",
+      "patterns": [
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "#complete_tag"
+        },
+        {
+          "begin": "^(?=.)",
+          "end": "$",
+          "name": "text.block.pug",
+          "patterns": [
+            {
+              "include": "#inline_pugx"
+            },
+            {
+              "include": "#embedded_html"
+            },
+            {
+              "include": "#html_entity"
+            },
+            {
+              "include": "#interpolated_value"
+            },
+            {
+              "include": "#interpolated_error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "begin": "^\\s*",
+      "end": "$",
+      "comment": "All constructs that generally span a single line starting with any number of white-spaces.",
+      "patterns": [
+        {
+          "include": "#inline_pugx"
+        },
+        {
+          "include": "#blocks_and_includes"
+        },
+        {
+          "include": "#unbuffered_code"
+        },
+        {
+          "include": "#mixin_definition"
+        },
+        {
+          "include": "#mixin_call"
+        },
+        {
+          "include": "#flow_control"
+        },
+        {
+          "include": "#case_conds"
+        },
+        {
+          "begin": "\\|",
+          "end": "$",
+          "name": "text.block.pipe.pug",
+          "comment": "Tag pipe text line.",
+          "patterns": [
+            {
+              "include": "#inline_pugx"
+            },
+            {
+              "include": "#embedded_html"
+            },
+            {
+              "include": "#html_entity"
+            },
+            {
+              "include": "#interpolated_value"
+            },
+            {
+              "include": "#interpolated_error"
+            }
+          ]
+        },
+        {
+          "include": "#printed_expression"
+        },
+        {
+          "begin": "\\G(?=(#[^\\{\\w-])|[^\\w.#])",
+          "end": "$",
+          "comment": "Line starting with characters incompatible with tag name/id/class is standalone text.",
+          "patterns": [
+            {
+              "begin": "</?(?=[!#])",
+              "end": ">|$",
+              "patterns": [
+                {
+                  "include": "#inline_pugx"
+                },
+                {
+                  "include": "#interpolated_value"
+                },
+                {
+                  "include": "#interpolated_error"
+                }
+              ]
+            },
+            {
+              "include": "#inline_pugx"
+            },
+            {
+              "include": "#embedded_html"
+            },
+            {
+              "include": "#html_entity"
+            },
+            {
+              "include": "#interpolated_value"
+            },
+            {
+              "include": "#interpolated_error"
+            }
+          ]
+        },
+        {
+          "include": "#complete_tag"
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "blocks_and_includes": {
+      "captures": {
+        "1": {
+          "name": "storage.type.import.include.pugx"
+        },
+        "4": {
+          "name": "variable.control.import.include.pugx"
+        }
+      },
+      "match": "(extends|include|yield|append|prepend|block( (append|prepend))?)\\s+(.*)$",
+      "name": "meta.first-class.pug",
+      "comment": "Template blocks and includes."
+    },
+    "unbuffered_code": {
+      "begin": "(-|(([a-zA-Z0-9_]+)\\s+=))",
+      "beginCaptures": {
+        "3": {
+          "name": "variable.parameter.javascript.embedded.pugx"
+        }
+      },
+      "end": "(?=\\])|(({\\s*)?$)",
+      "name": "source.js",
+      "comment": "name = function() {}",
+      "patterns": [
+        {
+          "include": "#js_brackets"
+        },
+        {
+          "include": "#babel_parens"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "mixin_definition": {
+      "match": "(mixin\\s+)([\\w-]+)(?:(\\()\\s*((?:[a-zA-Z_]\\w*\\s*)(?:,\\s*[a-zA-Z_]\\w*\\s*)*)(\\)))?$",
+      "captures": {
+        "1": {
+          "name": "storage.type.function.pugx"
+        },
+        "2": {
+          "name": "meta.tag.other entity.name.function.pugx"
+        },
+        "3": {
+          "name": "punctuation.definition.parameters.begin.js"
+        },
+        "4": {
+          "name": "variable.parameter.function.js"
+        },
+        "5": {
+          "name": "punctuation.definition.parameters.begin.js"
+        }
+      }
+    },
+    "mixin_call": {
+      "begin": "((?:mixin\\s+)|\\+)([\\w-]+)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.function.pugx"
+        },
+        "2": {
+          "name": "meta.tag.other entity.name.function.pugx"
+        }
+      },
+      "end": "(?!\\()|$",
+      "patterns": [
+        {
+          "begin": "(?<!\\))\\(",
+          "end": "\\)",
+          "name": "args.mixin.pug",
+          "patterns": [
+            {
+              "include": "#js_parens"
+            },
+            {
+              "include": "#string"
+            },
+            {
+              "match": "([^\\s(),=/]+)\\s*=\\s*",
+              "captures": {
+                "1": {
+                  "name": "meta.tag.other entity.other.attribute-name.tag.pugx"
+                }
+              }
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "include": "#tag_attributes"
+        }
+      ]
+    },
+    "flow_control": {
+      "begin": "(for|if|else if|else|each|until|while|unless|case)(\\s+|$)",
+      "captures": {
+        "1": {
+          "name": "storage.type.function.pugx"
+        }
+      },
+      "end": "$",
+      "name": "meta.control.flow.pug",
+      "comment": "Pug control flow.",
+      "patterns": [
+        {
+          "begin": "",
+          "end": "$",
+          "name": "js.embedded.control.flow.pug",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "case_when_paren": {
+      "begin": "\\(",
+      "end": "\\)",
+      "name": "js.when.control.flow.pug",
+      "patterns": [
+        {
+          "include": "#case_when_paren"
+        },
+        {
+          "match": ":",
+          "name": "invalid.illegal.name.tag.pugx"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "case_conds": {
+      "begin": "(default|when)((\\s+|(?=:))|$)",
+      "captures": {
+        "1": {
+          "name": "storage.type.function.pugx"
+        }
+      },
+      "end": "$",
+      "name": "meta.control.flow.pug",
+      "comment": "Pug case conditionals.",
+      "patterns": [
+        {
+          "begin": "\\G(?!:)",
+          "end": "(?=:\\s+)|$",
+          "name": "js.embedded.control.flow.pug",
+          "patterns": [
+            {
+              "include": "#case_when_paren"
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": ":\\s+",
+          "end": "$",
+          "name": "tag.case.control.flow.pug",
+          "patterns": [
+            {
+              "include": "#complete_tag"
+            }
+          ]
+        }
+      ]
+    },
+    "complete_tag": {
+      "begin": "(?=[\\w.#])|(:\\s*)",
+      "end": "(\\.?$)|(?=:.)",
+      "patterns": [
+        {
+          "include": "#blocks_and_includes"
+        },
+        {
+          "include": "#unbuffered_code"
+        },
+        {
+          "include": "#mixin_call"
+        },
+        {
+          "include": "#flow_control"
+        },
+        {
+          "match": "(?<=:)\\w.*$",
+          "name": "invalid.illegal.name.tag.pugx"
+        },
+        {
+          "include": "#tag_name"
+        },
+        {
+          "include": "#tag_id"
+        },
+        {
+          "include": "#tag_classes"
+        },
+        {
+          "include": "#tag_attributes"
+        },
+        {
+          "include": "#tag_mixin_attributes"
+        },
+        {
+          "match": "((\\.)\\s+$)|((:)\\s*$)",
+          "captures": {
+            "2": {
+              "name": "invalid.illegal.end.tag.pugx"
+            },
+            "4": {
+              "name": "invalid.illegal.end.tag.pugx"
+            }
+          }
+        },
+        {
+          "include": "#printed_expression"
+        },
+        {
+          "include": "#tag_text"
+        }
+      ]
+    },
+    "tag_name": {
+      "begin": "([#!]\\{(?=.*?\\}))|(\\w(([\\w:-]+[\\w-])|([\\w-]*)))",
+      "end": "(\\G(?<!\\5[^\\w-]))|\\}|$",
+      "name": "meta.tag.other entity.name.tag.pug",
+      "patterns": [
+        {
+          "begin": "\\G(?<=\\{)",
+          "end": "(?=\\})",
+          "name": "meta.tag.other entity.name.tag.pug",
+          "patterns": [
+            {
+              "match": "{",
+              "name": "invalid.illegal.tag.pugx"
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "tag_id": {
+      "match": "#[\\w-]+",
+      "name": "entity.other.attribute-name.id.pugx"
+    },
+    "tag_classes": {
+      "match": "\\.([^\\w-])?[\\w-]*",
+      "captures": {
+        "1": {
+          "name": "invalid.illegal.tag.pugx"
+        }
+      },
+      "name": "entity.other.attribute-name.class.pugx"
+    },
+    "tag_attributes": {
+      "begin": "(\\(\\s*)",
+      "captures": {
+        "1": {
+          "name": "constant.name.attribute.tag.pugx"
+        }
+      },
+      "end": "(\\))",
+      "name": "meta.tag.other",
+      "patterns": [
+        {
+          "include": "#tag_attribute_name_paren"
+        },
+        {
+          "include": "#tag_attribute_name"
+        },
+        {
+          "match": "!(?!=)",
+          "name": "invalid.illegal.tag.pugx"
+        },
+        {
+          "begin": "=\\s*",
+          "end": "$|(?=,|(?:\\s+[^!%&*-+~|<>:?/])|\\))",
+          "name": "attribute_value",
+          "patterns": [
+            {
+              "include": "#string"
+            },
+            {
+              "include": "#js_parens"
+            },
+            {
+              "include": "#js_brackets"
+            },
+            {
+              "include": "#js_braces"
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "begin": "(?<=[%&*-+~|<>:?/])\\s+",
+          "end": "$|(?=,|(?:\\s+[^!%&*-+~|<>:?/])|\\))",
+          "name": "attribute_value2",
+          "patterns": [
+            {
+              "include": "#string"
+            },
+            {
+              "include": "#js_parens"
+            },
+            {
+              "include": "#js_brackets"
+            },
+            {
+              "include": "#js_braces"
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "tag_attribute_name": {
+      "match": "([^\\s(),=/!]+)\\s*",
+      "captures": {
+        "1": {
+          "name": "entity.other.attribute-name.tag.pugx"
+        }
+      }
+    },
+    "tag_attribute_name_paren": {
+      "begin": "\\(\\s*",
+      "end": "\\)",
+      "name": "entity.other.attribute-name.tag.pug",
+      "patterns": [
+        {
+          "include": "#tag_attribute_name_paren"
+        },
+        {
+          "include": "#tag_attribute_name"
+        }
+      ]
+    },
+    "tag_mixin_attributes": {
+      "begin": "(&attributes\\()",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.pugx"
+        }
+      },
+      "end": "(\\))",
+      "name": "meta.tag.other",
+      "patterns": [
+        {
+          "match": "attributes(?=\\))",
+          "name": "storage.type.keyword.pugx"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "tag_text": {
+      "begin": "(?=.)",
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#inline_pugx"
+        },
+        {
+          "include": "#embedded_html"
+        },
+        {
+          "include": "#html_entity"
+        },
+        {
+          "include": "#interpolated_value"
+        },
+        {
+          "include": "#interpolated_error"
+        }
+      ]
+    },
+    "inline_pug_text": {
+      "begin": "",
+      "end": "(?=\\])",
+      "patterns": [
+        {
+          "begin": "\\[",
+          "end": "\\]",
+          "patterns": [
+            {
+              "include": "#inline_pug_text"
+            }
+          ]
+        },
+        {
+          "include": "#inline_pugx"
+        },
+        {
+          "include": "#embedded_html"
+        },
+        {
+          "include": "#html_entity"
+        },
+        {
+          "include": "#interpolated_value"
+        },
+        {
+          "include": "#interpolated_error"
+        }
+      ]
+    },
+    "inline_pug": {
+      "begin": "(?<!\\\\)(#\\[)",
+      "captures": {
+        "1": {
+          "name": "entity.name.function.pugx"
+        },
+        "2": {
+          "name": "entity.name.function.pugx"
+        }
+      },
+      "end": "(\\])",
+      "name": "inline.pug",
+      "patterns": [
+        {
+          "include": "#inline_pugx"
+        },
+        {
+          "include": "#mixin_call"
+        },
+        {
+          "begin": "(?<!\\])(?=[\\w.#])|(:\\s*)",
+          "end": "(?=\\]|(:.)|=|\\s)",
+          "name": "tag.inline.pug",
+          "patterns": [
+            {
+              "include": "#tag_name"
+            },
+            {
+              "include": "#tag_id"
+            },
+            {
+              "include": "#tag_classes"
+            },
+            {
+              "include": "#tag_attributes"
+            },
+            {
+              "include": "#tag_mixin_attributes"
+            },
+            {
+              "include": "#inline_pugx"
+            },
+            {
+              "match": "\\[",
+              "name": "invalid.illegal.tag.pugx"
+            }
+          ]
+        },
+        {
+          "include": "#unbuffered_code"
+        },
+        {
+          "include": "#printed_expression"
+        },
+        {
+          "match": "\\[",
+          "name": "invalid.illegal.tag.pugx"
+        },
+        {
+          "include": "#inline_pug_text"
+        }
+      ]
+    },
+    "html_entity": {
+      "patterns": [
+        {
+          "match": "(&)([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+)(;)",
+          "name": "constant.character.entity.html.text.pugx"
+        },
+        {
+          "match": "[<>&]",
+          "name": "invalid.illegal.html_entity.text.pugx"
+        }
+      ]
+    },
+    "interpolated_value": {
+      "begin": "(?<!\\\\)[#!]\\{(?=.*?\\})",
+      "end": "\\}",
+      "name": "string.interpolated.pug",
+      "patterns": [
+        {
+          "match": "{",
+          "name": "invalid.illegal.tag.pugx"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "interpolated_error": {
+      "match": "(?<!\\\\)[#!]\\{(?=[^}]*$)",
+      "name": "invalid.illegal.tag.pugx"
+    },
+    "printed_expression": {
+      "begin": "(!?\\=)\\s*",
+      "captures": {
+        "1": {
+          "name": "constant"
+        }
+      },
+      "end": "(?=\\])|$",
+      "name": "source.js",
+      "patterns": [
+        {
+          "include": "#js_brackets"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "string": {
+      "begin": "(['\"])",
+      "end": "(?<!\\\\)\\1",
+      "name": "string.quoted.pug",
+      "patterns": [
+        {
+          "match": "\\\\((x[0-9a-fA-F]{2})|(u[0-9]{4})|.)",
+          "name": "constant.character.quoted.pugx"
+        },
+        {
+          "include": "#interpolated_value"
+        },
+        {
+          "include": "#interpolated_error"
+        }
+      ]
+    },
+    "embedded_html": {
+      "begin": "(?=<[^>]*>)",
+      "end": "$|(?=>)",
+      "name": "html",
+      "patterns": [
+        {
+          "include": "text.html.basic"
+        },
+        {
+          "include": "#interpolated_value"
+        },
+        {
+          "include": "#interpolated_error"
+        }
+      ]
+    },
+    "js_parens": {
+      "begin": "\\(",
+      "end": "\\)",
+      "patterns": [
+        {
+          "include": "#js_parens"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "js_brackets": {
+      "begin": "\\[",
+      "end": "\\]",
+      "patterns": [
+        {
+          "include": "#js_brackets"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "js_braces": {
+      "begin": "\\{",
+      "end": "\\}",
+      "patterns": [
+        {
+          "include": "#js_braces"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    },
+    "babel_parens": {
+      "begin": "\\(",
+      "end": "\\)|(({\\s*)?$)",
+      "patterns": [
+        {
+          "include": "#babel_parens"
+        },
+        {
+          "include": "source.js"
+        }
+      ]
+    }
+  }
+}

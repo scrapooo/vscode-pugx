@@ -1,0 +1,29 @@
+{
+  "meta:viewport": {
+    "prefix": ["meta:viewport", "viewport"],
+    "body": [
+      "meta(name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0\")"
+    ],
+    "description": "less tag"
+  },
+  "link:css": {
+    "prefix": ["link:css"],
+    "body": ["link(rel=\"stylesheet\" href=\"$0\")"]
+  },
+  "link:favicon": {
+    "prefix": ["link:favicon"],
+    "body": [
+      "link(rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\")"
+    ]
+  },
+  "less": {
+    "prefix": ["less", "style"],
+    "body": ["style(lang=\"less\").", "  $0"],
+    "description": "less tag"
+  },
+  "js": {
+    "prefix": ["js", "script"],
+    "body": ["script.", "  $0"],
+    "description": "js tag"
+  }
+}
