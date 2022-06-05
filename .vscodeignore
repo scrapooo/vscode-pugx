@@ -22,6 +22,8 @@ server/node_modules/typescript/lib/tsc.js
 server/node_modules/typescript/lib/tsserver.js
 server/node_modules/typescript/lib/tsserverlibrary.js
 server/node_modules/typescript/lib/typescriptServices.js
+!server/node_modules/typescript/lib/*.d.ts
 
 .vsix
 scripts
+
