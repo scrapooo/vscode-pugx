@@ -118,7 +118,9 @@ export function getJavascriptMode(
         const space = findTabStr(document, region, formattingOption);
         newText = newText
           .split("\n")
-          .map((a) => (a.trim() ? space + a : ""))
+          .map((line) => {
+            return space + (line.trim() ? line.trimEnd() : line); // 空行无需trimEnd
+          })
           .join("\n");
 
         textEdits.push({
