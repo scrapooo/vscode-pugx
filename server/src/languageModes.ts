@@ -26,12 +26,21 @@ import {
   Range,
 } from "vscode-languageserver";
 
-export * from "vscode-html-languageservice";
+export * from "vscode-languageserver";
+
+export type CompletionItemData = {
+  languageId: string;
+  uri: string;
+  offset: number;
+};
 
 export interface LanguageMode {
   getId(): string;
   doValidation?: (document: TextDocument) => Diagnostic[];
-  doComplete?: (document: TextDocument, position: Position) => CompletionList;
+  doComplete?: (
+    document: TextDocument,
+    position: Position
+  ) => Promise<CompletionList>;
   doFormat?: (
     document: TextDocument,
     formattingOption: FormattingOptions

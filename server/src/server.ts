@@ -11,13 +11,11 @@ import {
   ProposedFeatures,
   TextDocuments,
   TextDocumentSyncKind,
-  WorkspaceFolder,
 } from "vscode-languageserver";
 import { getLanguageModes, LanguageModes, TextEdit } from "./languageModes";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { createService as createTsService } from "./services/typescriptLanguageService";
 import { createLinterOptions } from "./services/eslinter";
-import { Range } from "vscode-html-languageservice";
+import { Range } from "vscode-languageserver";
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -55,7 +53,6 @@ function createSercies() {
   return connection.workspace.getWorkspaceFolders().then((workspaces) => {
     if (workspaces) {
       const workspace = workspaces[0];
-      createTsService(workspace);
       createLinterOptions(workspace);
     }
   });

@@ -33,7 +33,7 @@ export function getLESSMode(
       const stylesheet = lessLanguageService.parseStylesheet(embedded);
       return lessLanguageService.doValidation(embedded, stylesheet);
     },
-    doComplete(document: TextDocument, position: Position) {
+    async doComplete(document: TextDocument, position: Position) {
       const embedded = documentRegions
         .get(document)
         .getEmbeddedDocument("less");

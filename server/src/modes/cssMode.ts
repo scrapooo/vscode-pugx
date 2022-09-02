@@ -23,7 +23,7 @@ export function getCSSMode(
       const stylesheet = cssLanguageService.parseStylesheet(embedded);
       return cssLanguageService.doValidation(embedded, stylesheet);
     },
-    doComplete(document: TextDocument, position: Position) {
+    async doComplete(document: TextDocument, position: Position) {
       // Get virtual CSS document, with all non-CSS code replaced with whitespace
       const embedded = documentRegions.get(document).getEmbeddedDocument("css");
       const stylesheet = cssLanguageService.parseStylesheet(embedded);
