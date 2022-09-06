@@ -1,0 +1,90 @@
+doctype html
+html(lang="zh")
+  head
+    style(lang="less").
+      .container {
+        width: 1200px;
+        margin: 0 auto;
+      }
+      
+      footer.page-footer {
+        height: 0.7rem;
+        line-height: 0.7rem;
+        background-color: #161515;
+        text-align: center;
+        a {
+          color: rgba(255, 255, 255, 0.65);
+          text-decoration: none;
+        }
+      }
+      
+      .section {
+        margin: 0.7rem 0;
+        &-header {
+          color: #1a1a1a;
+          text-align: center;
+          .title {
+            font-size: 0.36rem;
+            font-weight: bold;
+          }
+          .subtitle {
+            min-width: 1.8rem;
+            font-size: 12px;
+            margin-top: 0.5em;
+            position: relative;
+            display: inline-block;
+            .decorator {
+              color: #2d5fbc;
+              &::after,
+              &::before {
+                content: " ";
+                top: 0;
+                position: absolute;
+                background-color: currentColor;
+                top: 50%;
+                height: 3px;
+                transform: translateY(-50%);
+                width: 1.5em;
+                left: -1.5em;
+              }
+              &::before {
+                height: 1px;
+                width: 1em;
+                margin-left: -1em;
+              }
+              &.right::after,
+              &.right::before {
+                left: auto;
+                right: -1.5em;
+              }
+              &.right::before {
+                left: auto;
+                margin-right: -1em;
+              }
+            }
+          }
+        }
+        &-body {
+          margin: 0.3rem auto;
+        }
+      }
+      
+  script.
+    function fiber(i) {
+      if (i <= 2) return 1;
+      return fiber(i - 1) + fiber(i - 2);
+    }
+    
+
+  body
+    include ./includes/_banner
+    include ./includes/_qaentry
+    include ./includes/_qmtyyszsbj
+    include ./includes/_jdrk
+    include ./includes/_qmtshqt
+    include ./includes/_wsmykqmtyys
+    include ./includes/_jygwfx
+    include ./includes/_course
+    include ./includes/_jdhz
+    include ./includes/_form
+    footer.page-footer
